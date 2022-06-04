@@ -4,6 +4,7 @@
 
 const { Client, Intents, MessageEmbed } = require("discord.js");
 const axios = require("axios");
+const fs = require("fs");
 const bot = new Client({
     intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
 });
@@ -32,10 +33,15 @@ bot.on("message", async message => {
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+    const response = await axios.get('https://api.epitest.eu/me/2021' , { headers : {
+    Authorization : epitoken }});
 
     switch (command) {
         case "help":
             cmd.DisplayHelp(botname, botimg, message);
+            break;
+        case "last":
+            cmd.DisplayLastTest(botname, botimg, message, response);
             break;
     }
 });
