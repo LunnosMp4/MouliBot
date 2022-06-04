@@ -1,0 +1,23 @@
+{
+  "name": "moulibot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LunnosMp4/MouliBot.git"
+  },
+  "author": "Lunnos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LunnosMp4/MouliBot/issues"
+  },
+  "homepage": "https://github.com/LunnosMp4/MouliBot#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "discord.js": "^13.7.0"
+  }
+}
