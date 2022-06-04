@@ -11,13 +11,22 @@ const bot = new Client({
 const config = require("./config.json");
 const prefix = config.prefix;
 const bottoken = config.bottoken;
-const epitoken = config.epitoken;
 const botname = config.botname;
 const botdesc = config.botdesc;
 const botimg = config.botimg;
+let data;
 
 const core = require("./src/core/main.js");
 const cmd = require("./src/commands/main.js");
+
+try {
+    data = JSON.parse(fs.readFileSync(config.data, 'utf8'));
+} catch(e) {
+    data = {
+        log: []
+    }
+    fs.writeFileSync(config.data, JSON.stringify(data));
+}
 
 bot.on("ready", () => {
     console.log(`${botname} is ready!`);
@@ -33,15 +42,37 @@ bot.on("message", async message => {
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    const response = await axios.get('https://api.epitest.eu/me/2021' , { headers : {
-    Authorization : epitoken }});
+    console.log(`${message.author.tag} do the command ${command}`);
 
     switch (command) {
+        case "token":
+            cmd.SetToken(botname, botimg, message, args, data);
+            break;
         case "help":
             cmd.DisplayHelp(botname, botimg, message);
             break;
         case "last":
-            cmd.DisplayLastTest(botname, botimg, message, response);
+            const list = core.GetUserInList(data, message.author.id);
+            if (list > -1) {
+                axios.get('https://api.epitest.eu/me/2021' , { headers : {
+                Authorization : data.log[list].token }}).then(response => {
+                    cmd.DisplayLastTest(botname, botimg, message, response);
+                }).catch(error => {
+                    cmd.ErrorToken(botname, botimg, message, 1);
+                });
+            } else
+                cmd.ErrorToken(botname, botimg, message, 0);
+            break;
+        default:
+            core.sendEmbedMessage(
+                `Error - Command Not Found`,
+                "This Command Doesn't Exist.",
+                "#ff0000",
+                botimg,
+                "What Should You Do ?, \nYou can use **'help** to see the list of commands.",
+                `${botname}`,
+                message
+            );
             break;
     }
 });

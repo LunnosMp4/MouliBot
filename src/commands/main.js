@@ -2,7 +2,6 @@
 // https://github.com/LunnosMp4/MouliBot
 // License: MIT
 
-const axios = require("axios");
 const core = require("../core/main.js");
 
 function DisplayHelp(botname, botimg, message)
@@ -12,7 +11,7 @@ function DisplayHelp(botname, botimg, message)
         "All the commands are listed below.",
         "#0099ff",
         botimg,
-        "Commands, Help - Display This Help Message\nLast - Display Last Test Results\nStat - Display All Your Stats",
+        "Commands, **Help** - Display This Help Message\n**Token <your_token>** - Login With Your Token\n**Last** - Display Last Test Results\n**Stat** - Display All Your Stats",
         `${botname}`, 
         message
     );
@@ -22,8 +21,9 @@ function DisplayLastTest(botname, botimg, message, response)
 {
     const data = response.data;
     const dataLength = data.length - 1;
+    var NbTest = dataLength;
 
-    var externalItems = data[dataLength].results.externalItems;
+    var externalItems = data[NbTest].results.externalItems;
     var externalItemsLength = externalItems.length;
     var externalItemsCounter = 0;
     var externalItemsFinal = [];
@@ -38,8 +38,8 @@ function DisplayLastTest(botname, botimg, message, response)
     const StyleError = externalItemsFinal[0].value == 1 ? "Yes" : "No";
 
     core.sendEmbedMessage(
-        `Project : ${data[dataLength].project.name}`,
-        `Module : ${data[dataLength].project.module.code}`,
+        `Project : ${data[NbTest].project.name}`,
+        `Unit : ${data[NbTest].project.module.code}`,
         "#0099ff",
         botimg,
         `Style Errors, Too Many Style Error - ${StyleError}\nMajor - ${externalItemsFinal[2].value}\nMinor - ${externalItemsFinal[3].value}\nInfo - ${externalItemsFinal[4].value}
@@ -49,4 +49,9 @@ function DisplayLastTest(botname, botimg, message, response)
     );
 }
 
-module.exports = { DisplayHelp, DisplayLastTest };
+module.exports = {
+    DisplayHelp,
+    SetToken: require("./token.js").SetToken,
+    ErrorToken: require("./token.js").ErrorToken,
+    DisplayLastTest
+};
