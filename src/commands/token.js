@@ -5,12 +5,12 @@
 const axios = require("axios");
 const fs = require("fs");
 const config = require("../../config.json");
-const core = require("../core/main.js");
+const core = require("../core/include.js");
 
 function SetToken(botname, botimg, message, args, data)
 {
     if (args[0]) {
-        if (args[0].length !== 1596) {
+        if (args[0].length < 1596) {
             ErrorToken(botname, botimg, message, 1);
             return;
         }
@@ -64,7 +64,7 @@ function ErrorToken(botname, botimg, message, id_error)
     if (id_error === 1) {
         core.sendEmbedMessage(
             "Error - Invalid Token",
-            `${message.author.username}, your token is not Valid or Expired :(.`,
+            `${message.author.username}, your token is not Valid or Expired :(`,
             "#ff0000",
             botimg,
             "What Should You Do ?, \n1. Make sure you have a valid token.\n2. If you don't have a token yet please refer to the ReadMe File.",

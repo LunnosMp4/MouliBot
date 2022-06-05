@@ -16,8 +16,8 @@ const botdesc = config.botdesc;
 const botimg = config.botimg;
 let data;
 
-const core = require("./src/core/main.js");
-const cmd = require("./src/commands/main.js");
+const core = require("./src/core/include.js");
+const cmd = require("./src/commands/include.js");
 
 try {
     data = JSON.parse(fs.readFileSync(config.data, 'utf8'));
@@ -42,6 +42,7 @@ bot.on("message", async message => {
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+    var list = null;
     console.log(`${message.author.tag} do the command ${command}`);
 
     switch (command) {
@@ -52,16 +53,37 @@ bot.on("message", async message => {
             cmd.DisplayHelp(botname, botimg, message);
             break;
         case "last":
-            const list = core.GetUserInList(data, message.author.id);
+            list = core.GetUserInList(data, message.author.id);
             if (list > -1) {
                 axios.get('https://api.epitest.eu/me/2021' , { headers : {
                 Authorization : data.log[list].token }}).then(response => {
                     cmd.DisplayLastTest(botname, botimg, message, response);
                 }).catch(error => {
-                    if (error.status == 401)
-                        cmd.ErrorToken(botname, botimg, message, 1);
-                    else
-                        cmd.ErrorToken(botname, botimg, message, 2);
+                    cmd.ErrorToken(botname, botimg, message, 1);
+                });
+            } else
+                cmd.ErrorToken(botname, botimg, message, 0);
+            break;
+        case "select":
+            list = core.GetUserInList(data, message.author.id);
+            if (list > -1) {
+                axios.get('https://api.epitest.eu/me/2021' , { headers : {
+                Authorization : data.log[list].token }}).then(response => {
+                    cmd.DisplaySelectedTest(botname, botimg, message, response, args);
+                }).catch(error => {
+                    cmd.ErrorToken(botname, botimg, message, 1);
+                });
+            } else
+                cmd.ErrorToken(botname, botimg, message, 0);
+            break;
+        case "total":
+            list = core.GetUserInList(data, message.author.id);
+            if (list > -1) {
+                axios.get('https://api.epitest.eu/me/2021' , { headers : {
+                Authorization : data.log[list].token }}).then(response => {
+                    cmd.DisplayTotalTest(botname, botimg, message, response, args);
+                }).catch(error => {
+                    cmd.ErrorToken(botname, botimg, message, 1);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);

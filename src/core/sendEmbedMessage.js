@@ -4,15 +4,6 @@
 
 const { MessageEmbed } = require("discord.js");
 
-function GetUserInList(data, user)
-{
-    for (i = 0; data.log[i]; i++) {
-        if (data.log[i].user === user)
-            return i;
-    }
-    return -1;
-}
-
 function sendEmbedMessage(Title, Description, Color, Thumbnail, Fields, Footer, place)
 {
     var FieldsArray = Fields.split(",");
@@ -40,4 +31,4 @@ function sendEmbedMessage(Title, Description, Color, Thumbnail, Fields, Footer, 
     place.channel.send({embeds: [embed]});
 }
 
-module.exports = { GetUserInList, sendEmbedMessage };
+module.exports = { sendEmbedMessage };
