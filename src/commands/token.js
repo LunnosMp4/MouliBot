@@ -73,6 +73,17 @@ function ErrorToken(botname, botimg, message, id_error)
         );
         return;
     }
+    if (id_error === 2) {
+        core.sendEmbedMessage(
+            "Error - Crash",
+            `${message.author.username}, If you see this message contact the owner of the bot.`,
+            "#ff0000",
+            botimg,
+            "What Should You Do ?, \n1. Contact me on Discord : Lunnos#0001\n2. Contact me per email : lctisseyre@gmail.com\nPlease use discord first !",
+            `${botname}`,
+            message
+        );
+    }
 }
 
 module.exports = { SetToken, ErrorToken };

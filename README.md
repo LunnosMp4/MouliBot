@@ -17,7 +17,7 @@ You need to install this :
 ```
 
 Then you have to create a *config.json* and a *data.json* file at the root of the project.<br/>
-The *config.json* file will contain important information about your bot such as its name, its description but also its token, the *data.json* file will serve as a database and will contain the token from [my.epitech.eu](https://my.epitech.eu/) associated with each user.
+The *config.json* file will contain important information about your bot such as its name, its description but also its token, the *data.json* file will serve as a database and will contain the <a href="#token">token<a/> from [my.epitech.eu](https://my.epitech.eu/) associated with each user.
 
 In the *config.json* file you must write what is below, the other file must remain empty.
 

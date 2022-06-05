@@ -17,11 +17,11 @@ function DisplayHelp(botname, botimg, message)
     );
 }
 
-function DisplayLastTest(botname, botimg, message, response)
+function GetExternalItems(data, NbTest)
 {
-    const data = response.data;
-    const dataLength = data.length - 1;
-    var NbTest = dataLength;
+    var Crash = null;
+    var Banned = null;
+    var StyleError = null;
 
     var externalItems = data[NbTest].results.externalItems;
     var externalItemsLength = externalItems.length;
@@ -35,15 +35,72 @@ function DisplayLastTest(botname, botimg, message, response)
         });
         externalItemsCounter = externalItemsCounter + 1;
     }
-    const StyleError = externalItemsFinal[0].value == 1 ? "Yes" : "No";
+
+    var externalItemsFinalStyleError = externalItemsFinal.filter(function(item) {
+        return item.type == "coding-style-fail";
+    });
+    var externalItemsFinalStyleErrorValue = externalItemsFinalStyleError[0].value;
+    StyleError = externalItemsFinalStyleErrorValue == 1 ? "Yes" : "No";
+    try {
+        var externalItemsFinalBannedFunction = externalItemsFinal.filter(function(item) {
+            return item.type == "banned";
+        });
+        var externalItemsFinalBannedFunctionValue = externalItemsFinalBannedFunction[0].value;
+        Banned = externalItemsFinalBannedFunctionValue == 1 ? "Yes" : "No";
+    } catch(error) {
+        Banned = "No";
+    }
+    var externalItemsFinalLintMajor = externalItemsFinal.filter(function(item) {
+        return item.type == "lint.major";
+    });
+    var externalItemsFinalLintMajorValue = externalItemsFinalLintMajor[0].value;
+    var externalItemsFinalLintMinor = externalItemsFinal.filter(function(item) {
+        return item.type == "lint.minor";
+    });
+    var externalItemsFinalLintMinorValue = externalItemsFinalLintMinor[0].value;
+    var externalItemsFinalLintInfo = externalItemsFinal.filter(function(item) {
+        return item.type == "lint.info";
+    });
+    var externalItemsFinalLintInfoValue = externalItemsFinalLintInfo[0].value;
+    try {
+        var externalItemsFinalCrash = externalItemsFinal.filter(function(item) {
+            return item.type == "crash";
+        });
+        var externalItemsFinalCrashValue = externalItemsFinalCrash[0].value;
+        Crash = externalItemsFinalCrashValue == 1.5 ? "Yes" : "No";
+    } catch(error) {
+        Crash = "No";   
+    }
+
+    return [StyleError, externalItemsFinalLintMajorValue, externalItemsFinalLintMinorValue, externalItemsFinalLintInfoValue, Crash, Banned];
+}
+
+function DisplayLastTest(botname, botimg, message, response)
+{
+    const data = response.data;
+    const dataLength = data.length - 1;
+    var NbTest = dataLength;
+    let ExternalItems = GetExternalItems(data, NbTest);
+
+    var totalTests = 0;
+    for (var key in data[NbTest].results.skills) {
+        totalTests += data[NbTest].results.skills[key].count;
+    }
+    var totalTestsPassed = 0;
+    for (var key in data[NbTest].results.skills) {
+        totalTestsPassed += data[NbTest].results.skills[key].passed;
+    }
+    var percentage = Math.round((totalTestsPassed / totalTests) * 100);
+    var link = `https://my.epitech.eu/index.html#d/2021/${data[NbTest].project.module.code}/${data[NbTest].project.slug}/${data[NbTest].results.testRunId}`;
 
     core.sendEmbedMessage(
         `Project : ${data[NbTest].project.name}`,
         `Unit : ${data[NbTest].project.module.code}`,
         "#0099ff",
         botimg,
-        `Style Errors, Too Many Style Error - ${StyleError}\nMajor - ${externalItemsFinal[2].value}\nMinor - ${externalItemsFinal[3].value}\nInfo - ${externalItemsFinal[4].value}
-        , Result, Did it Crash ? - \nPercentage - \nTest Passed - \nTotal Test - `,
+        `Style Errors, Too Many Style Error - **${ExternalItems[0]}**\nMajor - **${ExternalItems[1]}**\nMinor - **${ExternalItems[2]}**\nInfo - **${ExternalItems[3]}**
+        , Result, Did it Crash ? - **${ExternalItems[4]}**\nBanned Function - **${ExternalItems[5]}**\nPercentage - **${percentage}%**\nTest Passed - **${totalTestsPassed}**\nTotal Test - **${totalTests}**
+        , Info, Link - [Your Online Result](${link})`,
         `${botname}`, 
         message
     );

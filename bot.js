@@ -58,7 +58,10 @@ bot.on("message", async message => {
                 Authorization : data.log[list].token }}).then(response => {
                     cmd.DisplayLastTest(botname, botimg, message, response);
                 }).catch(error => {
-                    cmd.ErrorToken(botname, botimg, message, 1);
+                    if (error.status == 401)
+                        cmd.ErrorToken(botname, botimg, message, 1);
+                    else
+                        cmd.ErrorToken(botname, botimg, message, 2);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
