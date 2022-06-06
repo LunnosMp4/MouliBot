@@ -28,7 +28,7 @@ function sendEmbedMessage(Title, Description, Color, Thumbnail, Fields, Footer, 
             embed.addField(FieldsArrayFinal[i].name, FieldsArrayFinal[i].value);
         embed.setTimestamp()
         embed.setFooter(`${Footer}`);
-    place.channel.send({embeds: [embed]});
+    return embed;
 }
 
 module.exports = { sendEmbedMessage };

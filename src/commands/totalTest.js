@@ -45,7 +45,7 @@ function DisplayTotalTest(botname, botimg, message, response, args)
         }
     }
 
-    core.sendEmbedMessage(
+    embed = core.sendEmbedMessage(
         `Year : 2021`,
         `Unit : ${Unit}`,
         "#0099ff",
@@ -54,6 +54,7 @@ function DisplayTotalTest(botname, botimg, message, response, args)
         `${botname}`, 
         message
     );
+    message.channel.send({embeds: [embed]});
 }
 
 module.exports = { DisplayTotalTest };

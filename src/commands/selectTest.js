@@ -35,7 +35,7 @@ function DisplaySelectedTest(botname, botimg, message, response, args)
     var percentage = Math.round((totalTestsPassed / totalTests) * 100);
     var link = `https://my.epitech.eu/index.html#d/2021/${data[NbTest].project.module.code}/${data[NbTest].project.slug}/${data[NbTest].results.testRunId}`;
 
-    core.sendEmbedMessage(
+    embed = core.sendEmbedMessage(
         `Project : ${data[NbTest].project.name}`,
         `Unit : ${data[NbTest].project.module.code}`,
         "#0099ff",
@@ -46,6 +46,7 @@ function DisplaySelectedTest(botname, botimg, message, response, args)
         `${botname}`, 
         message
     );
+    message.channel.send({embeds: [embed]});
 }
 
 module.exports = { DisplaySelectedTest };

@@ -29,6 +29,7 @@ function GetExternalItems(data, NbTest)
         var externalItemsFinalStyleErrorValue = externalItemsFinalStyleError[0].value;
         StyleError = externalItemsFinalStyleErrorValue == 1 ? "Yes" : "No";
     } catch(error) {
+        console.error(error);
         StyleError = "No";
     }
     try {
@@ -38,6 +39,7 @@ function GetExternalItems(data, NbTest)
         var externalItemsFinalBannedFunctionValue = externalItemsFinalBannedFunction[0].value;
         Banned = externalItemsFinalBannedFunctionValue == 1 ? "Yes" : "No";
     } catch(error) {
+        console.error(error);
         Banned = "No";
     }
     var externalItemsFinalLintMajor = externalItemsFinal.filter(function(item) {
@@ -59,6 +61,7 @@ function GetExternalItems(data, NbTest)
         var externalItemsFinalCrashValue = externalItemsFinalCrash[0].value;
         Crash = externalItemsFinalCrashValue == 1.5 ? "Yes" : "No";
     } catch(error) {
+        console.error(error);
         Crash = "No";   
     }
 

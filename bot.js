@@ -6,8 +6,10 @@ const { Client, Intents, MessageEmbed } = require("discord.js");
 const axios = require("axios");
 const fs = require("fs");
 const bot = new Client({
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
 });
+const emojiNext = '➡';
+const emojiPrevious = '⬅';
 const config = require("./config.json");
 const prefix = config.prefix;
 const bottoken = config.bottoken;
@@ -58,9 +60,11 @@ bot.on("message", async message => {
                 axios.get('https://api.epitest.eu/me/2021' , { headers : {
                 Authorization : data.log[list].token }}).then(response => {
                     cmd.DisplayLastTest(botname, botimg, message, response);
-                }).catch(error => {
-                    cmd.ErrorToken(botname, botimg, message, 1);
-                });
+                })
+                // .catch(error => {
+                //     console.error(error);
+                //     cmd.ErrorToken(botname, botimg, message, 1);
+                // });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
             break;
@@ -71,6 +75,7 @@ bot.on("message", async message => {
                 Authorization : data.log[list].token }}).then(response => {
                     cmd.DisplaySelectedTest(botname, botimg, message, response, args);
                 }).catch(error => {
+                    console.error(error);
                     cmd.ErrorToken(botname, botimg, message, 1);
                 });
             } else
@@ -83,13 +88,14 @@ bot.on("message", async message => {
                 Authorization : data.log[list].token }}).then(response => {
                     cmd.DisplayTotalTest(botname, botimg, message, response, args);
                 }).catch(error => {
+                    console.error(error);
                     cmd.ErrorToken(botname, botimg, message, 1);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
             break;
         default:
-            core.sendEmbedMessage(
+            embed = core.sendEmbedMessage(
                 `Error - Command Not Found`,
                 "This Command Doesn't Exist.",
                 "#ff0000",
@@ -98,6 +104,7 @@ bot.on("message", async message => {
                 `${botname}`,
                 message
             );
+            message.channel.send({embeds: [embed]});
             break;
     }
 });

@@ -6,7 +6,7 @@ const core = require("../core/include.js");
 
 function DisplayHelp(botname, botimg, message)
 {
-    core.sendEmbedMessage(
+    embed = core.sendEmbedMessage(
         `${botname} Help`,
         "All the commands are listed below.",
         "#0099ff",
@@ -17,6 +17,7 @@ function DisplayHelp(botname, botimg, message)
         `${botname}`, 
         message
     );
+    message.channel.send({embeds: [embed]});
 }
 
 module.exports = { DisplayHelp };

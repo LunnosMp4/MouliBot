@@ -26,7 +26,7 @@ function SetToken(botname, botimg, message, args, data)
         axios.get('https://api.epitest.eu/me/2021' , { headers : {
         Authorization : data.log[list].token }}).then(response => {
             if (response.status === 200) {
-                core.sendEmbedMessage(
+                embed = core.sendEmbedMessage(
                     "Token Valid",
                     `${message.author.username} Your token is Valid !`,
                     "#00ff00",
@@ -35,9 +35,11 @@ function SetToken(botname, botimg, message, args, data)
                     `${botname}`,
                     message
                 );
+                message.channel.send({embeds: [embed]});
             } else
                 ErrorToken(botname, botimg, message, 1);
         }).catch(error => {
+            console.error(error);
             ErrorToken(botname, botimg, message, 1);
         });
         message.delete();
@@ -50,7 +52,7 @@ function SetToken(botname, botimg, message, args, data)
 function ErrorToken(botname, botimg, message, id_error)
 {
     if (id_error === 0) {
-        core.sendEmbedMessage(
+        embed = core.sendEmbedMessage(
             "Error - No Token Registered",
             `${message.author.username}, you must provide a token.`,
             "#ff0000",
@@ -59,10 +61,11 @@ function ErrorToken(botname, botimg, message, id_error)
             `${botname}`,
             message
         );
+        message.channel.send({embeds: [embed]});
         return;
     }
     if (id_error === 1) {
-        core.sendEmbedMessage(
+        embed = core.sendEmbedMessage(
             "Error - Invalid Token",
             `${message.author.username}, your token is not Valid or Expired :(`,
             "#ff0000",
@@ -71,10 +74,11 @@ function ErrorToken(botname, botimg, message, id_error)
             `${botname}`,
             message
         );
+        message.channel.send({embeds: [embed]});
         return;
     }
     if (id_error === 2) {
-        core.sendEmbedMessage(
+        embed = core.sendEmbedMessage(
             "Error - Crash",
             `${message.author.username}, If you see this message contact the owner of the bot.`,
             "#ff0000",
@@ -83,6 +87,7 @@ function ErrorToken(botname, botimg, message, id_error)
             `${botname}`,
             message
         );
+        message.channel.send({embeds: [embed]});
     }
 }
 
