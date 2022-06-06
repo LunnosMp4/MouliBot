@@ -60,11 +60,10 @@ bot.on("message", async message => {
                 axios.get('https://api.epitest.eu/me/2021' , { headers : {
                 Authorization : data.log[list].token }}).then(response => {
                     cmd.DisplayLastTest(botname, botimg, message, response);
-                })
-                // .catch(error => {
-                //     console.error(error);
-                //     cmd.ErrorToken(botname, botimg, message, 1);
-                // });
+                }).catch(error => {
+                    console.error(error);
+                    cmd.ErrorToken(botname, botimg, message, 1);
+                });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
             break;
