@@ -3,6 +3,7 @@
 // License: MIT
 
 const core = require("../core/include.js");
+const QuickChart = require('quickchart-js');
 
 const emojiNext = '➡';
 const emojiPrevious = '⬅';
@@ -23,6 +24,29 @@ function DisplayTest(botname, botimg, message, data, NbTest)
     var percentage = Math.round((totalTestsPassed / totalTests) * 100);
     var link = `https://my.epitech.eu/index.html#d/2021/${data[NbTest].project.module.code}/${data[NbTest].project.slug}/${data[NbTest].results.testRunId}`;
 
+    const chart = new QuickChart();
+
+    chart.setWidth(100)
+    chart.setHeight(15)
+    .setBackgroundColor('transparent');
+
+    chart.setConfig({
+        type: 'progressBar',
+        data: {
+            datasets: [{
+                backgroundColor: "#0099ff",
+                data: [percentage],
+                datalabels: {
+                    font: {
+                        style: 'Arial',
+                        size: 9,
+                        color: '#ffffff'
+                    }
+                }
+            }]
+        },
+    });
+
     embed = core.sendEmbedMessage(
         `Project : ${data[NbTest].project.name}`,
         `Unit : ${data[NbTest].project.module.code}`,
@@ -32,7 +56,7 @@ function DisplayTest(botname, botimg, message, data, NbTest)
         , Result, Did it Crash ? - **${ExternalItems[4]}**\nBanned Function - **${ExternalItems[5]}**\nPercentage - **${percentage}%**\nTest Passed - **${totalTestsPassed}**\nTotal Test - **${totalTests}**
         , Info, Link - [Your Online Result](${link})`,
         `${botname}`, 
-        message
+        chart.getUrl()
     );
     return embed;
 }
@@ -52,17 +76,29 @@ function DisplayLastTest(botname, botimg, message, response)
             msg.react(emojiPrevious);
             msg.react(emojiNext);
             if (reaction.emoji.name === emojiPrevious) {
-                if (NbTest > 0) {
+                if (NbTest == 0) {
+                    NbTest = dataLength;
+                    embed = DisplayTest(botname, botimg, message, data, NbTest);
+                    msg.edit({embeds: [embed]});
+                    reaction.users.remove(message.author.id);
+                } else if (NbTest > 0) {
                     NbTest--;
                     embed = DisplayTest(botname, botimg, message, data, NbTest);
                     msg.edit({embeds: [embed]});
+                    reaction.users.remove(message.author.id);
                 }
             }
             if (reaction.emoji.name === emojiNext) {
-                if (NbTest < dataLength) {
+                if (NbTest === dataLength) {
+                    NbTest = 0;
+                    embed = DisplayTest(botname, botimg, message, data, NbTest);
+                    msg.edit({embeds: [embed]});
+                    reaction.users.remove(message.author.id);
+                } else if (NbTest < dataLength) {
                     NbTest++;
                     embed = DisplayTest(botname, botimg, message, data, NbTest);
                     msg.edit({embeds: [embed]});
+                    reaction.users.remove(message.author.id);
                 }
             }
         });

@@ -3,9 +3,10 @@
 // License: MIT
 
 const core = require("../core/include.js");
+const QuickChart = require('quickchart-js');
+const { MessageEmbed } = require("discord.js");
 
-function DisplayTotalTest(botname, botimg, message, response, args)
-{
+function DisplayTotalTest(botname, botimg, message, response, args) {
     const data = response.data;
     const dataLength = data.length - 1;
     var NbTest = -1;
@@ -31,30 +32,119 @@ function DisplayTotalTest(botname, botimg, message, response, args)
         Unit = args[0];
     }
 
-    for (let i = 0; i < dataLength; i++) {
-        if (args[0]) {
-            if (data[i].project.module.code === Unit) {
-                totalMajor += data[i].results.externalItems.filter(item => item.type === 'lint.major').map(item => item.value)[0];
-                totalMinor += data[i].results.externalItems.filter(item => item.type === 'lint.minor').map(item => item.value)[0];
-                totalInfo += data[i].results.externalItems.filter(item => item.type === 'lint.info').map(item => item.value)[0];
+
+    let modules = [];
+    for (var i = dataLength; i > 0; i--) {
+        if (modules.indexOf(data[i].project.module.code) == -1)
+            modules.push(data[i].project.module.code);
+    }
+    let externalItems = [];
+    for (var i = 0; i < modules.length; i++) {
+        let module = modules[i];
+        let moduleMajor = 0;
+        let moduleMinor = 0;
+        let moduleInfo = 0;
+        for (var j = dataLength; j > 0; j--) {
+            if (data[j].project.module.code == module) {
+                moduleMajor += data[j].results.externalItems.filter(item => item.type === 'lint.major').map(item => item.value)[0];
+                moduleMinor += data[j].results.externalItems.filter(item => item.type === 'lint.minor').map(item => item.value)[0];
+                moduleInfo += data[j].results.externalItems.filter(item => item.type === 'lint.info').map(item => item.value)[0];
             }
-        } else {
-            totalMajor += data[i].results.externalItems.filter(item => item.type === 'lint.major').map(item => item.value)[0];
-            totalMinor += data[i].results.externalItems.filter(item => item.type === 'lint.minor').map(item => item.value)[0];
-            totalInfo += data[i].results.externalItems.filter(item => item.type === 'lint.info').map(item => item.value)[0];
         }
+        externalItems.push({
+            module: module,
+            major: moduleMajor,
+            minor: moduleMinor,
+            info: moduleInfo
+        });
     }
 
-    embed = core.sendEmbedMessage(
-        `Year : 2021`,
-        `Unit : ${Unit}`,
-        "#0099ff",
-        botimg,
-        `Style Error, Major - **${totalMajor}**\nMinor - **${totalMinor}**\nInfo - **${totalInfo}**`,
-        `${botname}`, 
-        message
-    );
-    message.channel.send({embeds: [embed]});
+    //check if externalItems.module is the same as args[0]
+    if (args[0]) {
+        for (i = 0; i < externalItems.length; i++) {
+            if (externalItems[i].module == args[0]) {
+                totalMajor += externalItems[i].major;
+                totalMinor += externalItems[i].minor;
+                totalInfo += externalItems[i].info;
+            }
+        }
+    } else {
+        for (var i = 0; i < externalItems.length; i++) {
+            totalMajor += externalItems[i].major;
+            totalMinor += externalItems[i].minor;
+            totalInfo += externalItems[i].info;
+        }
+    }
+    let chart = new QuickChart();
+    chart
+        .setConfig({
+            type: 'bar',
+            data: {
+                labels: modules,
+                datasets: [{
+                    label: 'Major',
+                    data: externalItems.map(item => item.major)
+                }, {
+                    label: 'Minor',
+                    data: externalItems.map(item => item.minor)
+                }, {
+                    label: 'Info',
+                    data: externalItems.map(item => item.info)
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Chart.js Bar Chart - Stacked',
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                responsive: true,
+                scales: {
+                    xAxes: [
+                        {
+                            stacked: true,
+                        },
+                    ],
+                    yAxes: [
+                        {
+                            stacked: true,
+                        },
+                    ],
+                },
+            }
+        })
+        .setWidth(800)
+        .setHeight(400)
+        .setBackgroundColor('white');
+
+    if (args[0]) {
+        const embed = core.sendEmbedMessage(
+            `Year 2021`,
+            `Unit - ${Unit}`,
+            '#0099ff',
+            botimg,
+            `Major, ${totalMajor},\nMinor, ${totalMinor},\nInfo, ${totalInfo}`,
+            `${botname}`,
+            null
+        )
+        message.channel.send({ embeds: [embed] })
+    } else {
+        const embed = core.sendEmbedMessage(
+            `Year 2021`,
+            `Unit - ${Unit}`,
+            '#0099ff',
+            botimg,
+            `Major, ${totalMajor},\nMinor, ${totalMinor},\nInfo, ${totalInfo}`,
+            `${botname}`,
+            chart.getUrl()
+        )
+        message.channel.send({ embeds: [embed] })
+    }
+
+
 }
 
 module.exports = { DisplayTotalTest };

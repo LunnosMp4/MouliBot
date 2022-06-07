@@ -33,7 +33,7 @@ function SetToken(botname, botimg, message, args, data)
                     botimg,
                     "What Should You Do Now ?, \nYou can use **'help** to see the list of commands.",
                     `${botname}`,
-                    message
+                    null
                 );
                 message.channel.send({embeds: [embed]});
             } else
@@ -59,7 +59,7 @@ function ErrorToken(botname, botimg, message, id_error)
             botimg,
             "What Should You Do ?, \nYou must use **'token <your_token>** to save your token.\nIf you don't have a token yet please refer to the ReadMe File.",
             `${botname}`,
-            message
+            null
         );
         message.channel.send({embeds: [embed]});
         return;
@@ -72,7 +72,7 @@ function ErrorToken(botname, botimg, message, id_error)
             botimg,
             "What Should You Do ?, \n1. Make sure you have a valid token.\n2. If you don't have a token yet please refer to the ReadMe File.",
             `${botname}`,
-            message
+            null
         );
         message.channel.send({embeds: [embed]});
         return;
@@ -85,7 +85,7 @@ function ErrorToken(botname, botimg, message, id_error)
             botimg,
             "What Should You Do ?, \n1. Contact me on Discord : Lunnos#0001\n2. Contact me per email : lctisseyre@gmail.com\nPlease use discord first !",
             `${botname}`,
-            message
+            null
         );
         message.channel.send({embeds: [embed]});
     }

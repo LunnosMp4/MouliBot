@@ -14,6 +14,7 @@ You need to install this :
     sudo apt install nodejs npm
     npm install discordjs
     npm install axios
+    npm install quickchart-js
 ```
 
 Then you have to create a *config.json* and a *data.json* file at the root of the project.<br/>

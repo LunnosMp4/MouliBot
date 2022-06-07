@@ -15,7 +15,7 @@ function DisplayHelp(botname, botimg, message)
         **Last** - Display Last Test Result\n**Select <project name>** - Display Selected Project Result\n\
         **Total** - Display All Test Result From All Projects\n**Total <unit>** - Display All Test Result From Selected Unit\n",
         `${botname}`, 
-        message
+        null
     );
     message.channel.send({embeds: [embed]});
 }

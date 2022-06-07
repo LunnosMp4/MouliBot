@@ -4,7 +4,7 @@
 
 const { MessageEmbed } = require("discord.js");
 
-function sendEmbedMessage(Title, Description, Color, Thumbnail, Fields, Footer, place)
+function sendEmbedMessage(Title, Description, Color, Thumbnail, Fields, Footer, image)
 {
     var FieldsArray = Fields.split(",");
     var FieldsArrayLength = FieldsArray.length;
@@ -19,16 +19,33 @@ function sendEmbedMessage(Title, Description, Color, Thumbnail, Fields, Footer, 
         });
         FieldsArrayCounter = FieldsArrayCounter + 2;
     }
-    const embed = new MessageEmbed()
-        embed.setTitle(`${Title}`)
-        embed.setDescription(`${Description}`)
-        embed.setColor(`${Color}`)
-        embed.setThumbnail(Thumbnail)
-        for (var i = 0; i < FieldsArrayFinal.length; i++)
-            embed.addField(FieldsArrayFinal[i].name, FieldsArrayFinal[i].value);
-        embed.setTimestamp()
-        embed.setFooter(`${Footer}`);
-    return embed;
+
+    //check if image is null or undefined
+    if (image === null || image === undefined)
+    {
+        const embed = new MessageEmbed()
+            embed.setTitle(`${Title}`)
+            embed.setDescription(`${Description}`)
+            embed.setColor(`${Color}`)
+            embed.setThumbnail(Thumbnail)
+            for (var i = 0; i < FieldsArrayFinal.length; i++)
+                embed.addField(FieldsArrayFinal[i].name, FieldsArrayFinal[i].value);
+            embed.setTimestamp()
+            embed.setFooter(`${Footer}`);
+        return embed;
+    } else {
+        const embed = new MessageEmbed()
+            embed.setTitle(`${Title}`)
+            embed.setDescription(`${Description}`)
+            embed.setColor(`${Color}`)
+            embed.setThumbnail(Thumbnail)
+            for (var i = 0; i < FieldsArrayFinal.length; i++)
+                embed.addField(FieldsArrayFinal[i].name, FieldsArrayFinal[i].value);
+            embed.setImage(image)
+            embed.setTimestamp()
+            embed.setFooter(`${Footer}`);
+        return embed;
+    }
 }
 
 module.exports = { sendEmbedMessage };

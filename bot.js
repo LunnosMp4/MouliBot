@@ -36,7 +36,7 @@ bot.on("ready", () => {
 });
 
 bot.login(bottoken);
-bot.on("message", async message => {
+bot.on("messageCreate", async message => {
     if (message.author.bot)
         return;
     if (message.content.indexOf(prefix) !== 0)
@@ -101,7 +101,7 @@ bot.on("message", async message => {
                 botimg,
                 "What Should You Do ?, \nYou can use **'help** to see the list of commands.",
                 `${botname}`,
-                message
+                null
             );
             message.channel.send({embeds: [embed]});
             break;

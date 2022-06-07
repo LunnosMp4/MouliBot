@@ -3,6 +3,7 @@
 // License: MIT
 
 const core = require("../core/include.js");
+const QuickChart = require('quickchart-js');
 
 function DisplaySelectedTest(botname, botimg, message, response, args)
 {
@@ -35,6 +36,29 @@ function DisplaySelectedTest(botname, botimg, message, response, args)
     var percentage = Math.round((totalTestsPassed / totalTests) * 100);
     var link = `https://my.epitech.eu/index.html#d/2021/${data[NbTest].project.module.code}/${data[NbTest].project.slug}/${data[NbTest].results.testRunId}`;
 
+    const chart = new QuickChart();
+
+    chart.setWidth(100)
+    chart.setHeight(15)
+    .setBackgroundColor('transparent');
+
+    chart.setConfig({
+        type: 'progressBar',
+        data: {
+            datasets: [{
+                backgroundColor: "#0099ff",
+                data: [percentage],
+                datalabels: {
+                    font: {
+                        style: 'Arial',
+                        size: 9,
+                        color: '#ffffff'
+                    }
+                }
+            }]
+        },
+    });
+
     embed = core.sendEmbedMessage(
         `Project : ${data[NbTest].project.name}`,
         `Unit : ${data[NbTest].project.module.code}`,
@@ -44,7 +68,7 @@ function DisplaySelectedTest(botname, botimg, message, response, args)
         , Result, Did it Crash ? - **${ExternalItems[4]}**\nBanned Function - **${ExternalItems[5]}**\nPercentage - **${percentage}%**\nTest Passed - **${totalTestsPassed}**\nTotal Test - **${totalTests}**
         , Info, Link - [Your Online Result](${link})`,
         `${botname}`, 
-        message
+        chart.getUrl()
     );
     message.channel.send({embeds: [embed]});
 }
