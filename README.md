@@ -44,12 +44,16 @@ You can see below examples of the main commands that can be used on discord.
  
  - `'last` : Shows the last test performed on my.epitech.eu, you can also change the test by clicking on the arrows under the message.
  
-<a href="https://zupimages.net/viewer.php?id=22/23/frwn.png"><img src="https://zupimages.net/up/22/23/frwn.png" alt="" height="400"/></a>
+<a href="https://zupimages.net/viewer.php?id=22/23/ggdj.png"><img src="https://zupimages.net/up/22/23/ggdj.png" alt="" height="400"/></a>
  
- - `'select <project_name>` : shows the last test performed on the project as argument (you can put the full project name or only the simplified version as in the example.
+ - `'select <project_name>` : Shows the last test performed on the project as argument (you can put the full project name or only the simplified version as in the example.
  
- <a href="https://zupimages.net/viewer.php?id=22/23/qqou.png"><img src="https://zupimages.net/up/22/23/qqou.png" alt="" height="400"/></a>
+<a href="https://zupimages.net/viewer.php?id=22/23/m9y9.png"><img src="https://zupimages.net/up/22/23/m9y9.png" alt="" height="400"/></a>
 
+ - `'total` : Shows the total of syntax errors of all your projects combined per units. You can also look at the syntax errors per units by doing the command `'total <unit_name>`
+ 
+<a href="https://zupimages.net/viewer.php?id=22/23/n9fv.png"><img src="https://zupimages.net/up/22/23/n9fv.png" alt="" height="400"/></a>
+ 
 ## Token
 
 For the moment you have to enter your token yourself, so you have to go get it manually, but this will change in the future to make it much easier
