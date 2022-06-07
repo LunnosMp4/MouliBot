@@ -4,7 +4,6 @@
 
 const core = require("../core/include.js");
 const QuickChart = require('quickchart-js');
-const { MessageEmbed } = require("discord.js");
 
 function DisplayTotalTest(botname, botimg, message, response, args) {
     const data = response.data;
@@ -93,10 +92,6 @@ function DisplayTotalTest(botname, botimg, message, response, args) {
                 }]
             },
             options: {
-                title: {
-                    display: true,
-                    text: 'Chart.js Bar Chart - Stacked',
-                },
                 tooltips: {
                     mode: 'index',
                     intersect: false,

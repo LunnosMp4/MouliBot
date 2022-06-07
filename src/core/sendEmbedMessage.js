@@ -20,7 +20,6 @@ function sendEmbedMessage(Title, Description, Color, Thumbnail, Fields, Footer, 
         FieldsArrayCounter = FieldsArrayCounter + 2;
     }
 
-    //check if image is null or undefined
     if (image === null || image === undefined)
     {
         const embed = new MessageEmbed()

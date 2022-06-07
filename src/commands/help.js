@@ -13,7 +13,9 @@ function DisplayHelp(botname, botimg, message)
         botimg,
         "Commands, **Help** - Display This Help Message\n**Token <your_token>** - Login With Your Token\n\
         **Last** - Display Last Test Result\n**Select <project name>** - Display Selected Project Result\n\
-        **Total** - Display All Test Result From All Projects\n**Total <unit>** - Display All Test Result From Selected Unit\n",
+        **Total** - Display All Test Result From All Projects\n**Total <unit>** - Display All Test Result From Selected Unit\n\
+        **Sort** - Display Your top 10 projects by percentage\n**Sort date** - Display Your top 10 projects by date\n\
+        **Sort all** - Display All your projects by percentage (can be combine with 'date')\n",
         `${botname}`, 
         null
     );

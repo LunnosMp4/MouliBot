@@ -9,5 +9,6 @@ module.exports = {
     DisplayLastTest: require("./lastTest.js").DisplayLastTest,
     DisplaySelectedTest: require("./selectTest.js").DisplaySelectedTest,
     DisplayTotalTest: require("./totalTest.js").DisplayTotalTest,
-    DisplayTest: require("./lastTest.js").DisplayTest
+    DisplayTest: require("./lastTest.js").DisplayTest,
+    DisplaySortedTest: require("./sortTest.js").DisplaySortedTest
 };

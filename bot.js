@@ -93,6 +93,19 @@ bot.on("messageCreate", async message => {
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
             break;
+        case "sort":
+            list = core.GetUserInList(data, message.author.id);
+            if (list > -1) {
+                axios.get('https://api.epitest.eu/me/2021' , { headers : {
+                Authorization : data.log[list].token }}).then(response => {
+                    cmd.DisplaySortedTest(botname, botimg, message, response, args);
+                }).catch(error => {
+                    console.error(error);
+                    cmd.ErrorToken(botname, botimg, message, 1);
+                });
+            } else
+                cmd.ErrorToken(botname, botimg, message, 0);
+            break;
         default:
             embed = core.sendEmbedMessage(
                 `Error - Command Not Found`,
