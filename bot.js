@@ -6,7 +6,8 @@ const { Client, Intents, MessageEmbed } = require("discord.js");
 const axios = require("axios");
 const fs = require("fs");
 const bot = new Client({
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
+    partials: ["MESSAGE", "CHANNEL", "REACTION"],
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS]
 });
 const emojiNext = '➡';
 const emojiPrevious = '⬅';
@@ -35,7 +36,6 @@ bot.on("ready", () => {
     bot.user.setActivity(botdesc, { type: "PLAYING" });
 });
 
-bot.login(bottoken);
 bot.on("messageCreate", async message => {
     if (message.author.bot)
         return;
@@ -49,12 +49,17 @@ bot.on("messageCreate", async message => {
 
     switch (command) {
         case "token":
-            cmd.SetToken(botname, botimg, message, args, data);
+            if (message.channel.type === "DM")
+                cmd.SetToken(botname, botimg, message, args, data);
+            else
+                cmd.ErrorToken(botname, botimg, message, 3);
             break;
         case "help":
             cmd.DisplayHelp(botname, botimg, message);
             break;
         case "last":
+            if (message.channel.type === "DM")
+                break;
             list = core.GetUserInList(data, message.author.id);
             if (list > -1) {
                 axios.get('https://api.epitest.eu/me/2021' , { headers : {
@@ -68,6 +73,8 @@ bot.on("messageCreate", async message => {
                 cmd.ErrorToken(botname, botimg, message, 0);
             break;
         case "select":
+            if (message.channel.type === "DM")
+                break;
             list = core.GetUserInList(data, message.author.id);
             if (list > -1) {
                 axios.get('https://api.epitest.eu/me/2021' , { headers : {
@@ -81,6 +88,8 @@ bot.on("messageCreate", async message => {
                 cmd.ErrorToken(botname, botimg, message, 0);
             break;
         case "total":
+            if (message.channel.type === "DM")
+                break;
             list = core.GetUserInList(data, message.author.id);
             if (list > -1) {
                 axios.get('https://api.epitest.eu/me/2021' , { headers : {
@@ -94,6 +103,8 @@ bot.on("messageCreate", async message => {
                 cmd.ErrorToken(botname, botimg, message, 0);
             break;
         case "sort":
+            if (message.channel.type === "DM")
+                break;
             list = core.GetUserInList(data, message.author.id);
             if (list > -1) {
                 axios.get('https://api.epitest.eu/me/2021' , { headers : {
@@ -120,3 +131,5 @@ bot.on("messageCreate", async message => {
             break;
     }
 });
+
+bot.login(bottoken);

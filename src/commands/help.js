@@ -8,7 +8,7 @@ function DisplayHelp(botname, botimg, message)
 {
     embed = core.sendEmbedMessage(
         `${botname} Help`,
-        "All the commands are listed below.",
+        "All the commands are listed below. Commands are disabled in DM.",
         "#0099ff",
         botimg,
         "Commands, **Help** - Display This Help Message\n**Token <your_token>** - Login With Your Token\n\

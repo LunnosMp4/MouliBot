@@ -30,7 +30,7 @@ function sendEmbedMessage(Title, Description, Color, Thumbnail, Fields, Footer, 
             for (var i = 0; i < FieldsArrayFinal.length; i++)
                 embed.addField(FieldsArrayFinal[i].name, FieldsArrayFinal[i].value);
             embed.setTimestamp()
-            embed.setFooter(`${Footer}`);
+            embed.setFooter({ text : `${Footer}` });
         return embed;
     } else {
         const embed = new MessageEmbed()
@@ -42,7 +42,7 @@ function sendEmbedMessage(Title, Description, Color, Thumbnail, Fields, Footer, 
                 embed.addField(FieldsArrayFinal[i].name, FieldsArrayFinal[i].value);
             embed.setImage(image)
             embed.setTimestamp()
-            embed.setFooter(`${Footer}`);
+            embed.setFooter({ text :`${Footer}` });
         return embed;
     }
 }

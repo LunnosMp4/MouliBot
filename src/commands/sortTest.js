@@ -29,13 +29,28 @@ function DisplaySortedTest(botname, botimg, message, response, args) {
         args[i] = args[i].toLowerCase();
     }
     for (var i = 0; i < args.length; i++) {
-        if (args[i].startsWith("b-") && args[i].length == 3) {
-            defaultExcludedUnit.push(args[i]);
+        if (args[i].startsWith("b-") && args[i].length == 9) {
+            var unit = args[i].toUpperCase();
+            var unitExist = false;
+            for (var j = 0; j < dataLength; j++) {
+                if (data[j].project.module.code == unit) {
+                    unitExist = true;
+                    break;
+                }
+            }
+            if (unitExist) {
+                defaultExcludedUnit.push(unit);
+            }
         }
     }
     for (var i = dataLength; i >= 0; i--) {
-        if (defaultExcludedUnit.indexOf(data[i].project.module.code) != -1)
-            i--;
+        for (var j = 0; j < defaultExcludedUnit.length; j++) {
+            if (data[i].project.module.code == defaultExcludedUnit[j]) {
+                i--;
+                break;
+            }
+        }
+
         var totalTests = 0;
         for (var key in data[i].results.skills) {
             totalTests += data[i].results.skills[key].count;
@@ -95,12 +110,17 @@ function DisplaySortedTest(botname, botimg, message, response, args) {
                         ticks: {
                             beginAtZero: true
                         }
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            fontSize: 10
+                        }
                     }]
                 }
             }
         })
-        .setWidth(800)
-        .setHeight(400)
+        .setWidth(1200)
+        .setHeight(600)
         .setBackgroundColor('white');
 
     chart.getShortUrl().then(function (url) {
@@ -109,15 +129,15 @@ function DisplaySortedTest(botname, botimg, message, response, args) {
             embed_text.setDescription(`Here is the sorted list of ${top} projects`)
             embed_text.setColor(`#0099ff`)
             embed_text.setThumbnail(botimg)
-            for (var i = 0; i <= 23; i++) {
+            for (var i = 0; i <= top; i++) {
                 embed_text.addField(`${percentage[i].project}`, `Percentage : ${percentage[i].percent}%`)
             }
             embed_text.setImage(url)
             embed_text.setTimestamp()
-            embed_text.setFooter(`${botname}`);
+            embed_text.setFooter({text : `${botname}`});
         message.channel.send({ embeds: [embed_text] });
     }).catch(function (err) {
-        console.log(err);
+        console.error(err);
     });
         
 }

@@ -42,10 +42,8 @@ function SetToken(botname, botimg, message, args, data)
             console.error(error);
             ErrorToken(botname, botimg, message, 1);
         });
-        message.delete();
     } else {
         ErrorToken(botname, botimg, message, 0);
-        message.delete();
     }
 }
 
@@ -84,6 +82,18 @@ function ErrorToken(botname, botimg, message, id_error)
             "#ff0000",
             botimg,
             "What Should You Do ?, \n1. Contact me on Discord : Lunnos#0001\n2. Contact me per email : lctisseyre@gmail.com\nPlease use discord first !",
+            `${botname}`,
+            null
+        );
+        message.channel.send({embeds: [embed]});
+    }
+    if (id_error === 3) {
+        embed = core.sendEmbedMessage(
+            "Error - Wrong Channel",
+            `${message.author.username}, you must be in **DM** in order to keep your token private.`,
+            "#ff0000",
+            botimg,
+            "What Should You Do ?, \nGo in DM with me and try 'token <your_token>",
             `${botname}`,
             null
         );
