@@ -73,8 +73,6 @@ function DisplayLastTest(botname, botimg, message, response)
         const filter = (reaction, user) => !user.bot && (reaction.emoji.name === emojiPrevious || reaction.emoji.name === emojiNext);
         const collector = msg.createReactionCollector(filter, { time: 60000 });
         collector.on('collect', (reaction) => {
-            msg.react(emojiPrevious);
-            msg.react(emojiNext);
             if (reaction.emoji.name === emojiPrevious) {
                 if (NbTest == 0) {
                     NbTest = dataLength;
