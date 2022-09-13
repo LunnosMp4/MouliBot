@@ -4,8 +4,8 @@
 
 function GetUserInList(data, user)
 {
-    for (i = 0; data.log[i]; i++) {
-        if (data.log[i].user === user)
+    for (i = 0; data.users[i]; i++) {
+        if (data.users[i].user === user)
             return i;
     }
     return -1;

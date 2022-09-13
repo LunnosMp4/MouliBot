@@ -5,6 +5,7 @@
 module.exports = {
     DisplayHelp: require("./help.js").DisplayHelp,
     SetToken: require("./token.js").SetToken,
+    Login: require("./login.js").Login,
     ErrorToken: require("./token.js").ErrorToken,
     DisplayLastTest: require("./lastTest.js").DisplayLastTest,
     DisplaySelectedTest: require("./selectTest.js").DisplaySelectedTest,

@@ -11,7 +11,7 @@ function DisplayHelp(botname, botimg, message)
         "All the commands are listed below. Commands are disabled in DM.",
         "#0099ff",
         botimg,
-        "Commands, **Help** - Display This Help Message\n**Token <your_token>** - Login With Your Token\n\
+        "Commands, **Help** - Display This Help Message\n**Login <your_mail> <your_password>** - Login to your Account\n\
         **Last** - Display Last Test Result\n**Select <project name>** - Display Selected Project Result\n\
         **Total** - Display All Test Result From All Projects\n**Total <unit>** - Display All Test Result From Selected Unit\n\
         **Sort** - Display Your top 10 projects by percentage\n**Sort date** - Display Your top 10 projects by date\n\

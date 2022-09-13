@@ -20,11 +20,11 @@ function SetToken(botname, botimg, message, args, data)
 
         const list = core.GetUserInList(data, message.author.id);
         if (list > -1)
-            data.log.splice(list, 1);
-        data.log.push({"user": message.author.id, "token": token});
-        fs.writeFileSync(config.data, JSON.stringify(data));
+            data.users.splice(list, 1);
+        data.users.push({"user": message.author.id, "token": token});
+        fs.writeFileSync(config.data, JSON.stringify(data, null, 4), (err) => err ? console.log(err) : 0);
         axios.get('https://api.epitest.eu/me/2021' , { headers : {
-        Authorization : data.log[list].token }}).then(response => {
+        Authorization : data.users[list].token }}).then(response => {
             if (response.status === 200) {
                 embed = core.sendEmbedMessage(
                     "Token Valid",
