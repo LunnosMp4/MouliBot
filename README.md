@@ -3,6 +3,8 @@
 
 ## A Discord Bot for [my.epitech.eu](https://my.epitech.eu/)
 
+**First Release coming soon !**
+
 This discord bot aims to make life easier for epitech students !<br/>Thanks to this bot you will be able to directly access your latest notes directly from discord !<br/>
 It will be active 24/7 when I deem it fit for duty !
 ## Setup
