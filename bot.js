@@ -18,8 +18,6 @@ const bot = new Client({
 });
 const axios = require("axios");
 const fs = require("fs");
-const emojiNext = '➡';
-const emojiPrevious = '⬅';
 const config = require("./config.json");
 const prefix = config.prefix;
 const bottoken = config.bottoken;
@@ -30,6 +28,7 @@ let data;
 
 const core = require("./src/core/include.js");
 const cmd = require("./src/commands/include.js");
+const Microsoft = require("./src/tokenGenerator/MicrosoftReLogin.js");
 
 try {
     data = JSON.parse(fs.readFileSync(config.data, 'utf8'));
@@ -44,6 +43,10 @@ bot.on("ready", () => {
     console.log(`${botname} is ready!`);
     console.log(prefix);
     bot.user.setActivity(botdesc, { type: "PLAYING" });
+
+    setInterval(() => {
+        Microsoft.ReLogin(data);
+    }, 1800000);
 });
 
 bot.on("messageCreate", async (message) => {
@@ -57,7 +60,7 @@ bot.on("messageCreate", async (message) => {
 
     // add user to data if not exist
     if (core.GetUserInList(data, message.author.id) === -1) {
-        data.users.push({"user": message.author.id, "token": null, "email": null, "password": null});
+        data.users.push({"user": message.author.id, "token": null});
         fs.writeFileSync(config.data, JSON.stringify(data, null, 4), (err) => err ? console.log(err) : 0);
     }
     switch (command) {

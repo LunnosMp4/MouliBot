@@ -4,4 +4,4 @@ node_modules
 data.json
 push
 tmp
-src/tokenGenerator
+src/tokenGenerator/MicrosoftLogin.js

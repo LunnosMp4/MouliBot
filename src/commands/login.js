@@ -6,8 +6,6 @@ const { MessageEmbed } = require("discord.js");
 const fs = require("fs");
 const config = require("../../config.json");
 const core = require("../core/include.js");
-const puppeteer = require('puppeteer');
-const headless = process.argv[2] === "headless";
 
 const cmd = require("../tokenGenerator/MicrosoftLogin.js"); // This File is Private, You can't see it
 
