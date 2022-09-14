@@ -31,7 +31,7 @@ function SetToken(botname, botimg, message, args, data)
                     `${message.author.username} Your token is Valid !`,
                     "#00ff00",
                     botimg,
-                    "What Should You Do Now ?, \nYou can use **'help** to see the list of commands.",
+                    "What Should You Do Now ?, \nYou can use **$help** to see the list of commands.",
                     `${botname}`,
                     null
                 );
@@ -51,11 +51,11 @@ function ErrorToken(botname, botimg, message, id_error)
 {
     if (id_error === 0) {
         embed = core.sendEmbedMessage(
-            "Error - No Token Registered",
-            `${message.author.username}, you must provide a token.`,
+            "Error - No Login Registered",
+            `${message.author.username}, you must login to use this command`,
             "#ff0000",
             botimg,
-            "What Should You Do ?, \nYou must use **'token <your_token>** to save your token.\nIf you don't have a token yet please refer to the ReadMe File.",
+            "What Should You Do ?, \nYou must use **$login <your_mail> <your_password>**.\n",
             `${botname}`,
             null
         );
@@ -90,10 +90,22 @@ function ErrorToken(botname, botimg, message, id_error)
     if (id_error === 3) {
         embed = core.sendEmbedMessage(
             "Error - Wrong Channel",
-            `${message.author.username}, you must be in **DM** in order to keep your token private.`,
+            `${message.author.username}, you must be in **DM** in order to keep your login session private.`,
             "#ff0000",
             botimg,
-            "What Should You Do ?, \nGo in DM with me and try 'token <your_token>",
+            "What Should You Do ?, \nGo in DM with me and try again",
+            `${botname}`,
+            null
+        );
+        message.channel.send({embeds: [embed]});
+    }
+    if (id_error === 4) {
+        embed = core.sendEmbedMessage(
+            "Error - Updating Token",
+            `${message.author.username}, The token was expired or invalid, please try again now.`,
+            "#ff0000",
+            botimg,
+            "What Should You Do ?, \nTry again !\nIf you still have the error contact the bot Owner.",
             `${botname}`,
             null
         );

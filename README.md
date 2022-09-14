@@ -24,7 +24,7 @@ In the *config.json* file you must write what is below, the other file must rema
 
 ```json
 {
-    "prefix": "'",
+    "prefix": "$",
     "bottoken": "bot_token",
     "botname": "bot_name",
     "botdesc": "bot_description",

@@ -17,7 +17,7 @@ function Login(botname, botimg, message, args, data) {
             `${message.author.username}, you must provide a login.`,
             "#ff0000",
             botimg,
-            "What Should You Do ?, \nYou must use **'login <your_mail> <your_password>** to login to your account.\nYou must use your epitech mail and password.\nYour email/password will not be saved.",
+            "What Should You Do ?, \nYou must use **$login <your_mail> <your_password>** to login to your account.\nYou must use your epitech mail and password.\nYour email/password will not be saved.",
             `${botname}`,
             null
         );

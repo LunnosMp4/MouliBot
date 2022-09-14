@@ -29,6 +29,8 @@ let data;
 const core = require("./src/core/include.js");
 const cmd = require("./src/commands/include.js");
 const Microsoft = require("./src/tokenGenerator/MicrosoftReLogin.js");
+const MicrosoftRefresh = require("./src/tokenGenerator/MicrosoftRefresh.js");
+
 
 try {
     data = JSON.parse(fs.readFileSync(config.data, 'utf8'));
@@ -67,8 +69,8 @@ bot.on("messageCreate", async (message) => {
         case "login":
             if (message.channel.type === "DM")
                 cmd.Login(botname, botimg, message, args, data);
-            else
-                message.reply("You can only use this command in DM");
+                else
+                cmd.ErrorToken(botname, botimg, message, 3);
             break;
         case "token":
             if (message.channel.type === "DM")
@@ -88,8 +90,8 @@ bot.on("messageCreate", async (message) => {
                 Authorization : data.users[list].token }}).then(response => {
                     cmd.DisplayLastTest(botname, botimg, message, response);
                 }).catch(error => {
-                    console.error(error);
-                    cmd.ErrorToken(botname, botimg, message, 1);
+                    MicrosoftRefresh.Refresh(data, message.author.id, message);
+                    cmd.ErrorToken(botname, botimg, message, 4);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
@@ -103,8 +105,8 @@ bot.on("messageCreate", async (message) => {
                 Authorization : data.users[list].token }}).then(response => {
                     cmd.DisplaySelectedTest(botname, botimg, message, response, args);
                 }).catch(error => {
-                    console.error(error);
-                    cmd.ErrorToken(botname, botimg, message, 1);
+                    MicrosoftRefresh.Refresh(data, message.author.id, message);
+                    cmd.ErrorToken(botname, botimg, message, 4);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
@@ -118,8 +120,8 @@ bot.on("messageCreate", async (message) => {
                 Authorization : data.users[list].token }}).then(response => {
                     cmd.DisplayTotalTest(botname, botimg, message, response, args);
                 }).catch(error => {
-                    console.error(error);
-                    cmd.ErrorToken(botname, botimg, message, 1);
+                    MicrosoftRefresh.Refresh(data, message.author.id, message);
+                    cmd.ErrorToken(botname, botimg, message, 4);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
@@ -133,8 +135,8 @@ bot.on("messageCreate", async (message) => {
                 Authorization : data.users[list].token }}).then(response => {
                     cmd.DisplaySortedTest(botname, botimg, message, response, args);
                 }).catch(error => {
-                    console.error(error);
-                    cmd.ErrorToken(botname, botimg, message, 1);
+                    MicrosoftRefresh.Refresh(data, message.author.id, message);
+                    cmd.ErrorToken(botname, botimg, message, 4);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
@@ -145,7 +147,7 @@ bot.on("messageCreate", async (message) => {
                 "This Command Doesn't Exist.",
                 "#ff0000",
                 botimg,
-                "What Should You Do ?, \nYou can use **'help** to see the list of commands.",
+                "What Should You Do ?, \nYou can use **$help** to see the list of commands.",
                 `${botname}`,
                 null
             );

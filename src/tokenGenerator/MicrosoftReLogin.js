@@ -20,7 +20,7 @@ function ReLogin(data) {
         Authorization : userToken }}).then(response => {
             if (response.status == 200) return;
         }).catch(error => {
-            console.error(error);
+            console.log("Token Expired for " + userID + "renewing token");
         });
 
         cmd.CreateBrowser(userID).then(async ({browser, page}) => {
