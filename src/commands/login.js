@@ -98,16 +98,8 @@ function Login(botname, botimg, message, args, data) {
                     });
                 });
                 cmd.ValidateLogin(browser, page).then(async ({browser, page}) => {
-                    const token = await page.evaluate(() => {
-                        const token = localStorage.getItem('argos-api.oidc-token')
-                        return token.substring(1, token.length - 1)
-                    });
 
-                    const list = core.GetUserInList(data, message.author.id);
-                    if (list > -1)
-                        data.users.splice(list, 1);
-                    data.users.push({"user": message.author.id, "token": "Bearer " + token});
-                    fs.writeFileSync(config.data, JSON.stringify(data, null, 4), (err) => err ? console.log(err) : 0);
+                    await core.scrapToken(data, page, message);
 
                     msg.edit({ embeds: [core.sendEmbedMessage(
                         `Successfull Login !`,

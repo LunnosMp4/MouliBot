@@ -11,5 +11,6 @@ module.exports = {
     DisplaySelectedTest: require("./selectTest.js").DisplaySelectedTest,
     DisplayTotalTest: require("./totalTest.js").DisplayTotalTest,
     DisplayTest: require("./lastTest.js").DisplayTest,
-    DisplaySortedTest: require("./sortTest.js").DisplaySortedTest
+    DisplaySortedTest: require("./sortTest.js").DisplaySortedTest,
+    Clear: require("./clear.js").Clear
 };

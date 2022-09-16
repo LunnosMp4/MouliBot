@@ -19,6 +19,7 @@ function DisplayHelp(botname, botimg, message)
         `${botname}`, 
         null
     );
+
     message.channel.send({embeds: [embed]});
 }
 

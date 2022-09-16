@@ -25,16 +25,8 @@ function ReLogin(data) {
 
         cmd.CreateBrowser(userID).then(async ({browser, page}) => {
             if (page.url().startsWith("https://my.epitech.eu/")) {
-                const token = await page.evaluate(() => {
-                    const token = localStorage.getItem('argos-api.oidc-token')
-                    return token.substring(1, token.length - 1)
-                });
 
-                const list = core.GetUserInList(data, userID);
-                if (list > -1)
-                    data.users.splice(list, 1);
-                data.users.push({"user": userID, "token": "Bearer " + token});
-                fs.writeFileSync(config.data, JSON.stringify(data, null, 4), (err) => err ? console.log(err) : 0);
+                await core.scrapToken(data, page, message);
                 console.log("Re Generating Token For " + userID);
                 browser.close();
             } else {

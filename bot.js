@@ -58,25 +58,29 @@ bot.on("messageCreate", async (message) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     var list = null;
-    console.log(`${message.author.tag} do the command ${command}`);
+    console.log(`${message.author.tag} do the command ${command}`); // Show in console who do the command (arguments are not shown for security and privacy reasons)
 
     // add user to data if not exist
     if (core.GetUserInList(data, message.author.id) === -1) {
         data.users.push({"user": message.author.id, "token": null});
         fs.writeFileSync(config.data, JSON.stringify(data, null, 4), (err) => err ? console.log(err) : 0);
     }
-    switch (command) {
+    switch (command) { // TODO : Change this switch case to a better system
         case "login":
             if (message.channel.type === "DM")
                 cmd.Login(botname, botimg, message, args, data);
-                else
+            else {
+                message.delete();
                 cmd.ErrorToken(botname, botimg, message, 3);
+            }
             break;
         case "token":
             if (message.channel.type === "DM")
                 cmd.SetToken(botname, botimg, message, args, data);
-            else
+            else {
+                message.delete();
                 cmd.ErrorToken(botname, botimg, message, 3);
+            }
             break;
         case "help":
             cmd.DisplayHelp(botname, botimg, message);
@@ -91,7 +95,6 @@ bot.on("messageCreate", async (message) => {
                     cmd.DisplayLastTest(botname, botimg, message, response);
                 }).catch(error => {
                     MicrosoftRefresh.Refresh(data, message.author.id, message);
-                    cmd.ErrorToken(botname, botimg, message, 4);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
@@ -106,7 +109,6 @@ bot.on("messageCreate", async (message) => {
                     cmd.DisplaySelectedTest(botname, botimg, message, response, args);
                 }).catch(error => {
                     MicrosoftRefresh.Refresh(data, message.author.id, message);
-                    cmd.ErrorToken(botname, botimg, message, 4);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
@@ -121,7 +123,6 @@ bot.on("messageCreate", async (message) => {
                     cmd.DisplayTotalTest(botname, botimg, message, response, args);
                 }).catch(error => {
                     MicrosoftRefresh.Refresh(data, message.author.id, message);
-                    cmd.ErrorToken(botname, botimg, message, 4);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
@@ -136,10 +137,14 @@ bot.on("messageCreate", async (message) => {
                     cmd.DisplaySortedTest(botname, botimg, message, response, args);
                 }).catch(error => {
                     MicrosoftRefresh.Refresh(data, message.author.id, message);
-                    cmd.ErrorToken(botname, botimg, message, 4);
                 });
             } else
                 cmd.ErrorToken(botname, botimg, message, 0);
+            break;
+        case "clear":
+            if (message.channel.type === "DM")
+                break;
+            cmd.Clear(message, args);
             break;
         default:
             embed = core.sendEmbedMessage(

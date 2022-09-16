@@ -6,5 +6,6 @@ module.exports = {
     GetUserInList: require('./getUserInList.js').GetUserInList,
     GetExternalItems: require("./externalItems.js").GetExternalItems,
     sendMessage: require("./sendMessage.js").sendMessage,
-    sendEmbedMessage: require("./sendEmbedMessage.js").sendEmbedMessage
+    sendEmbedMessage: require("./sendEmbedMessage.js").sendEmbedMessage,
+    scrapToken: require("./scrapToken.js").scrapToken,
 };

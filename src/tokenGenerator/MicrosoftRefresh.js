@@ -10,42 +10,59 @@ const cmd = require("./MicrosoftLogin.js"); // This File is Private, You can't s
 
 function Refresh(data, userID, message, botimg, botname) {
     embed = core.sendEmbedMessage(
-        "You are not logged in",
-        `${message.author.username} Your login session has expired, please login again`,
-        "#00ff00",
+        "Error - Updating Token",
+        `${message.author.username}, The token was expired or invalid, Regenerating Token...`,
+        "#ff7f00",
         botimg,
-        "What Should You Do Now ?, \nYou can use **$login <your_mail> <your_password>** to login again.",
+        "What Should You Do ?, \nTry again in a few seconds !\nIf you still have the error contact the bot Owner.",
         `${botname}`,
         null
     );
-
-    const list = core.GetUserInList(data, userID);
-    if (list < 0) {
-        message.channel.send({embeds: [embed]});
-        return;
-    }
-    
-    console.log("Refreshing Token");
-
-    cmd.CreateBrowser(userID).then(async ({browser, page}) => {
-        if (page.url().startsWith("https://my.epitech.eu/")) {
-            const token = await page.evaluate(() => {
-                const token = localStorage.getItem('argos-api.oidc-token')
-                return token.substring(1, token.length - 1)
-            });
-
-            const list = core.GetUserInList(data, userID);
-            if (list > -1)
-                data.users.splice(list, 1);
-            data.users.push({"user": userID, "token": "Bearer " + token});
-            fs.writeFileSync(config.data, JSON.stringify(data, null, 4), (err) => err ? console.log(err) : 0);
-            console.log("Re Generating Token For " + userID);
-            browser.close();
-        } else {
-            message.channel.send({embeds: [embed]});
-            browser.close();
+    message.channel.send({embeds: [embed]}).then(async (msg) => {
+        const list = core.GetUserInList(data, userID);
+        if (list < 0) {
+            msg.edit({ embeds: [core.sendEmbedMessage(
+                "You are not logged in",
+                `${message.author.username} Your login session has expired, please login again`,
+                "#ff0000",
+                botimg,
+                "What Should You Do Now ?, \nYou can use **$login <your_mail> <your_password>** to login again.",
+                `${botname}`,
+                null
+            )]});
             return;
         }
+        
+        console.log("Refreshing Token");
+
+        cmd.CreateBrowser(userID).then(async ({browser, page}) => {
+            if (page.url().startsWith("https://my.epitech.eu/")) {
+                await core.scrapToken(data, page, message);
+                console.log("Re Generating Token For " + userID);
+                msg.edit({ embeds: [core.sendEmbedMessage(
+                    `Token regenerate Successfully !`,
+                    ``,
+                    "#00ff00",
+                    botimg,
+                    `You can now use commands again !, Try using **${message.content}** again !`, 
+                    `${botname}`,
+                    null
+                )]});
+                browser.close();
+            } else {
+                msg.edit({ embeds: [core.sendEmbedMessage(
+                    "You are not logged in",
+                    `${message.author.username} Your login session has expired, please login again`,
+                    "#ff0000",
+                    botimg,
+                    "What Should You Do Now ?, \nYou can use **$login <your_mail> <your_password>** to login again.",
+                    `${botname}`,
+                    null
+                )]});
+                browser.close();
+                return;
+            }
+        });
     });
 }
 

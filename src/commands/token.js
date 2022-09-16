@@ -102,8 +102,8 @@ function ErrorToken(botname, botimg, message, id_error)
     if (id_error === 4) {
         embed = core.sendEmbedMessage(
             "Error - Updating Token",
-            `${message.author.username}, The token was expired or invalid, please try again now.`,
-            "#ff0000",
+            `${message.author.username}, The token was expired or invalid, please try again in a few seconds.`,
+            "#ff7f00",
             botimg,
             "What Should You Do ?, \nTry again !\nIf you still have the error contact the bot Owner.",
             `${botname}`,

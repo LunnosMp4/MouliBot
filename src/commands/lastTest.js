@@ -72,18 +72,18 @@ function DisplayLastTest(botname, botimg, message, response)
         msg.react(emojiNext);
         const filter = (reaction, user) => !user.bot && (reaction.emoji.name === emojiPrevious || reaction.emoji.name === emojiNext);
         const collector = msg.createReactionCollector(filter, { time: 60000 });
-        collector.on('collect', (reaction) => {
+        collector.on('collect', (reaction, user) => {
             if (reaction.emoji.name === emojiPrevious) {
                 if (NbTest == 0) {
                     NbTest = dataLength;
                     embed = DisplayTest(botname, botimg, message, data, NbTest);
                     msg.edit({embeds: [embed]});
-                    reaction.users.remove(message.author.id);
+                    if (!user.bot) reaction.users.remove(user.id);
                 } else if (NbTest > 0) {
                     NbTest--;
                     embed = DisplayTest(botname, botimg, message, data, NbTest);
                     msg.edit({embeds: [embed]});
-                    reaction.users.remove(message.author.id);
+                    if (!user.bot) reaction.users.remove(user.id);
                 }
             }
             if (reaction.emoji.name === emojiNext) {
@@ -91,12 +91,12 @@ function DisplayLastTest(botname, botimg, message, response)
                     NbTest = 0;
                     embed = DisplayTest(botname, botimg, message, data, NbTest);
                     msg.edit({embeds: [embed]});
-                    reaction.users.remove(message.author.id);
+                    if (!user.bot) reaction.users.remove(user.id);
                 } else if (NbTest < dataLength) {
                     NbTest++;
                     embed = DisplayTest(botname, botimg, message, data, NbTest);
                     msg.edit({embeds: [embed]});
-                    reaction.users.remove(message.author.id);
+                    if (!user.bot) reaction.users.remove(user.id);
                 }
             }
         });
