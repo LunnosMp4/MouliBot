@@ -1,7 +1,0 @@
-config.json
-.vscode
-node_modules
-data.json
-push
-tmp
-src/tokenGenerator/MicrosoftLogin.js
