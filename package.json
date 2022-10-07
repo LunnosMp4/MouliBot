@@ -1,0 +1,22 @@
+{
+  "name": "discord-debug-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/rest": "^1.1.0",
+    "axios": "^0.27.2",
+    "discord-api-types": "^0.37.10",
+    "discord-client-api": "^1.0.4",
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.2",
+    "fs": "^0.0.1-security",
+    "puppeteer": "^17.1.3",
+    "quickchart-js": "^3.1.0"
+  }
+}
