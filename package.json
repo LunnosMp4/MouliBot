@@ -1,12 +1,12 @@
 {
-  "name": "discord-debug-bot",
-  "version": "1.0.0",
-  "description": "",
+  "name": "moulibot",
+  "version": "2.0.0",
+  "description": "A Discord bot for my.epitech.eu",
   "main": "bot.js",
   "scripts": {
     "bot": "node bot.js"
   },
-  "author": "",
+  "author": "https://github.com/LunnosMp4",
   "license": "ISC",
   "dependencies": {
     "@discordjs/rest": "^1.1.0",
