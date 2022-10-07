@@ -31,29 +31,31 @@ You can see below examples of the main commands that can be used on discord.
 
 **Please read the following lines.**
 
-When you will have done the command `/login 'the bot will ask you to write a verification code. This is a code that you will receive by SMS on your phone. This code is to be written in the Discord chat. It comes the two steps authenticator of Microsoft **(I remind you that all your personal information (email and password) are in no way saved)**.<br>
+When you will have done the command `/login` the bot will ask you to write a verification code. This is a code that you will receive by SMS on your phone. This code is to be written in the Discord chat. It comes the two steps authenticator of Microsoft **(I remind you that all your personal information (email and password) are in no way saved)**.<br>
 
 Your token will be recovered thanks to this connection and updated regularly (every hour).
 If you receive the following message (see photo below) is that your token and being updated **(it's completely normal)**, you just have to wait a few seconds that the message changes (see photo below) and you can try the command again !
 
-When the token is updating:<br>
-<a href="https://zupimages.net/viewer.php?id=22/40/wubu.png"><img src="https://zupimages.net/up/22/40/wubu.png" alt="" height="400"/></a>
+- When the token is updating:<br>
+<a href="https://zupimages.net/viewer.php?id=22/40/wubu.png"><img src="https://zupimages.net/up/22/40/wubu.png" alt="" height="200"/></a>
 
-After a few seconds:<br>
-<a href="https://zupimages.net/viewer.php?id=22/40/712t.png"><img src="https://zupimages.net/up/22/40/712t.png" alt="" height="400"/></a>
+- Afer a few seconds:<br>
+<a href="https://zupimages.net/viewer.php?id=22/40/712t.png"><img src="https://zupimages.net/up/22/40/712t.png" alt="" height="200"/></a>
 
 ## Setup
-If you want to host the bot You need to install this :
+If you want to host the bot you need to follow theses steps :
 
 ```bash
+    git clone https://github.com/LunnosMp4/MouliBot.git
+    cd MouliBot/
     sudo apt install nodejs npm
     npm install
 ```
 
-Then you have to create a *config.json* and a *data.json* file at the root of the project.<br/>
-The *config.json* file will contain important information about your bot such as its name, its description but also its token, the *data.json* file will serve as a database and will contain the <a href="#token">token<a/> from [my.epitech.eu](https://my.epitech.eu/) associated with each user.
+Then you have to create a *.env* and a *data.json* file at the root of the project.<br/>
+The *.env* file will contain important information about your bot such as its name, its description but also its token, the *data.json* file will serve as a database and will contain the <a href="#token">token<a/> from [my.epitech.eu](https://my.epitech.eu/) associated with each user.
 
-In the *config.json* file you must write what is below, the other file must remain empty.
+In the *.env* file you must write what is below, the other file must remain empty.
 
 ```env
     TOKEN = "YOUR_BOT_TOKEN"
