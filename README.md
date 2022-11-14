@@ -42,35 +42,6 @@ If you receive the following message (see photo below) is that your token and be
 - Afer a few seconds:<br>
 <a href="https://zupimages.net/viewer.php?id=22/40/712t.png"><img src="https://zupimages.net/up/22/40/712t.png" alt="" height="200"/></a>
 
-## Setup
-If you want to host the bot you need to follow theses steps :
-
-```bash
-    git clone https://github.com/LunnosMp4/MouliBot.git
-    cd MouliBot/
-    sudo apt install nodejs npm
-    npm install
-```
-
-Then you have to create a *.env* and a *data.json* file at the root of the project.<br/>
-The *.env* file will contain important information about your bot such as its name, its description but also its token, the *data.json* file will serve as a database and will contain the <a href="#token">token<a/> from [my.epitech.eu](https://my.epitech.eu/) associated with each user.
-
-In the *.env* file you must write what is below, the other file must remain empty.
-
-```env
-    TOKEN = "YOUR_BOT_TOKEN"
-    NAME = "YOUR_BOT_NAME"
-    DESC = "YOUR_BOT_DESCRIPTION"
-    PP = "YOUR_BOT_PROFILE_PICTURE"
-    DATA = ./data.json
-    ADMIN = "YOUR_DISCORD_ID"
-```
-Then you just have to launch the bot !
-
-```bash
-    npm run bot
-```
- 
 ## Token
 
 This bot works with a recoverable token on the site my.epitech.eu. Token recovery is done automatically, you just need to log in once with the command `/login`.
