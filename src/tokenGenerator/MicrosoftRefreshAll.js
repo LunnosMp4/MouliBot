@@ -19,7 +19,7 @@ function MicrosoftRefreshAll(message) {
         let userID = data.users[key].user;
         let userToken = data.users[key].token;
 
-        axios.get('https://api.epitest.eu/me/2021' , { headers : {
+        axios.get('https://api.epitest.eu/me/2022' , { headers : {
         Authorization : userToken }}).then(response => {
             message.channel.send(`✅ User ${userID} is already logged in.`);
             success++;

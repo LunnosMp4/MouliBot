@@ -7,6 +7,11 @@ const deleteData = require('./admin/delete.js').deleteData;
 require('dotenv').config();
 
 function admin(message, client) {
+    // check if the user have a token registered in the database
+    if (core.getUserInList(message.user.id) === -1) {
+        return;
+    }
+
     if (!message.user.id == process.env.ADMIN) {
         message.reply("You are not the owner of the bot");
         return;
@@ -31,6 +36,9 @@ function admin(message, client) {
         }
         if (message.options._subcommand == 'delete') {
             deleteData(message)
+        }
+        else {
+            return;
         }
     }
 }

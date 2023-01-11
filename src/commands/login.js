@@ -7,10 +7,6 @@ const cmd = require("../tokenGenerator/MicrosoftLogin.js"); // This File is Priv
 require('dotenv').config();
 
 async function login(message) {
-    if (message.guildId) {
-        await message.reply("You can only use this command in DM !");
-        return;
-    }
     const email = message.options.getString('email');
     const password = message.options.getString('password');
 

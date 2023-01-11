@@ -22,6 +22,7 @@ const client = new Client({
 });
 
 require('dotenv').config();
+
 const fs = require("fs");
 const cmd = require('./src/initCommands/createCommands.js');
 const core = require('./src/core/include.js');

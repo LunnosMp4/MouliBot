@@ -1,6 +1,6 @@
 {
   "name": "moulibot",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A Discord bot for my.epitech.eu",
   "main": "bot.js",
   "scripts": {

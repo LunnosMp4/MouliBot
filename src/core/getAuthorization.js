@@ -13,7 +13,7 @@ async function getAuthorization(message) {
         var data = JSON.parse(fs.readFileSync(process.env.DATA, 'utf8'));
         let list = core.getUserInList(message.user.id);
         if (list > -1) {
-            axios.get('https://api.epitest.eu/me/2021',
+            axios.get('https://api.epitest.eu/me/2022',
             { headers : { Authorization : data.users[list].token }})
             .then(response => {
                 resolve(response.data);

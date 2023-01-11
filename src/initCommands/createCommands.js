@@ -84,6 +84,7 @@ async function createCommand(client) {
         ]
         
     });
+
     await client.application.commands.create({
         name: 'debug',
         description: 'A simple debug command (Only for Bot Owner)',

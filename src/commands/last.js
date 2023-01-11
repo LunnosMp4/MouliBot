@@ -20,7 +20,7 @@ function displayTest(data, NbTest)
         totalTestsPassed += data[NbTest].results.skills[key].passed;
     }
     var percentage = Math.round((totalTestsPassed / totalTests) * 100);
-    var link = `https://my.epitech.eu/index.html#d/2021/${data[NbTest].project.module.code}/${data[NbTest].project.slug}/${data[NbTest].results.testRunId}`;
+    var link = `https://my.epitech.eu/index.html#d/2022/${data[NbTest].project.module.code}/${data[NbTest].project.slug}/${data[NbTest].results.testRunId}`;
 
     const chart = new QuickChart()
         .setWidth(100)
